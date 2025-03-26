@@ -1,0 +1,51 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 TimesNewRomanPSMT;\f1\froman\fcharset0 Times-Bold;\f2\froman\fcharset0 TimesNewRomanPS-BoldMT;
+\f3\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\fi960\sa80\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Primarily, the report illustrates inventory statistics which include information about the production of components, the purchasing of components, the storage of those components, and the sale of products.\'a0
+\f1\b\fs48 \
+
+\f0\b0\fs29\fsmilli14667 The production of components contains information regarding a specific part number and type. Furthermore, each \'93parent part\'94 has one or more \'93child parts.\'94. These production orders will be classified using a unique key called \'93
+\f2\b Released Production Order (RPO).
+\f0\b0 \'94 The primary key is a combination of \'93RPO\'94 and a 5 digit code following it. Each RPO can contain one or more item numbers. Also, production orders have a field where it states a \'93Start Date\'94 and an \'93Expected Finish Date.\'94 These are important to gauge as it shows when a needed specific parent part will be transferred to back inventory. It\'92s also worth noting that the creation of a parent part requires some type of special machinery, as depicted in our model called \'93Equipment.\'94 Each production order\'92s cost is derived from the \'93Unit Cost\'94 in entity \'93ITEM\'94 multiplied by the \'93Quantity\'94 in \'93PRODUCTION_ORDER.\'94 This will be of more significance when we discuss the \'93INVENTORY\'94 entity.\'a0
+\f1\b\fs48 \
+\pard\pardeftab720\fi960\partightenfactor0
+
+\f0\b0\fs29\fsmilli14667 \cf0 As mentioned earlier, a specific \'93Item Number\'94 can be either replenished by manufacturing it \'93in-house\'94 (RPO) or by utilizing a \'93
+\f2\b Purchase Order (PO)
+\f0\b0 .\'94 Each purchase order is assigned a unique identifier called \'93PO.\'94 This is a combination of \'93PO\'94 and a 5 digit code following it. The purchase order contains information such as the quantity of a specific item(s) that is tied to that purchasing order. The total cost of the purchase order is derived from the \'93Unit Cost\'94 in entity \'93ITEM\'94 multiplied by the \'93Quantity\'94 in \'93PURCHASE_ORDER.\'94 It\'92s also worth noting that each purchasing order contains a field called \'93Fee.\'94 This fee is an addition to the cost of the good as the supplier will always attach an additional fee to a purchase order. Furthermore, each purchase order contains information regarding the order date along with the expected delivery date. This is an important field to have as it shows the company when a specific item will appear in inventory, thus it can later be used in a production order to create a parent part (finished good). Purchase orders also contain information about payment, specifically the terms of the payment (i.e. NET30, NET45, NET60). Also, the purchasing order relates to the \'93SUPPLIER\'94 entity, but does not have an indication of the item purchased as the item will fall into the \'93INVENTORY\'94 entity after being received. Lastly, each purchasing order may or may not have additional notes depicted as \'93Notes\'94 in our entity. This contains any additional details that the supplier may want us to know regarding the parts or purchasing orders. It is also important to acknowledge that a specific part can be bought from one or more suppliers. The \'93SUPPLIER\'94 field contains information regarding the supplier, such as the name, address, and contact information.
+\f3\fs24 \
+
+\f0\fs29\fsmilli14667 \'a0If a part is denoted as being a product in \'93INVENTORY\'94, then those parts are the ones that we sell to our customers using a sales order. Each sales order is identified by a unique key called \'93
+\f2\b Sales Order (SO).
+\f0\b0 \'94 This is composed from a combination of \'93SO\'94 followed by a 5 digit code. Each sales order contains information regarding the quantity of a specific item on the sales order. The total revenue derived from a sales order is computed by multiplying \'93Unit_Price\'94 in entity \'93ITEM\'94 by the \'93Quantity\'94 in entity \'93SALES_ORDER.\'94 It also contains information regarding the date the sales order was placed along with information regarding shipment details (i.e., shipment date and other information). Furthermore, we include a field called \'93Notes\'94 for any additional information that we\'92d like the customer to know regarding the sales order. Sales orders do not interact with final items as these items will exit \'93INVENTORY\'94 as products which are stored in the \'93ORDER_LINE\'94 entity. The \'93ORDER_LINE\'94 entity then relates to the sales order to show which products are being ordered. In \'93ORDER_LINE\'94, the Sales Order ID and Product ID are stored to denote the storing of products within each sales order. Quantity is also recorded to ensure the amount of each product is known before shipping. The \'93ORDER_LINE\'94 then feeds into the \'93SHIPMENT\'94 entity which reflects what is actually being shipped to the customer. In each shipment the ID of the shipment is recorded along with the arrival date and address as to ensure that the shipment is being received to the right address and when that shipment arrived. This \'93SHIPPING\'94 entity connects to the actual order based by the customer denoted by \'93CUSTOMER_ORDER\'94. The \'93CUSTOMER_ORDER\'94 entity reflects the actual placement of the order on the side of the customer, whereas sales order is our reflection of that order internally. Information such as the ID of the order, the date the order was placed, and the total cost (on the customer\'92s end) of the order allow us to relate this information to our sales orders and order line thus keeping integrity in terms of cost and order date throughout both order lines and sales orders. Entity \'93CUSTOMER\'94 contains information about the customer, such as the name of the company along with the location and contact information for that company.
+\f3\fs24 \
+
+\f0\fs29\fsmilli14667 As briefly discussed, each of the order types (purchasing orders, production orders, and sales orders) will help the company create a general ledger, which in turn, lets the company create income statements, balance sheets, and other financial reports needed to operate.\'a0
+\f3\fs24 \
+
+\f0\fs29\fsmilli14667 It is also worth noting that inventory of each part is tracked. This is depicted using our entity \'93INVENTORY.\'94 The unique identifier consists of a composite key which is a combination of \'93Bin_Code\'94 and \'93Item_Number\'94 from entity \'93ITEM.\'94 Attribute \'93Bin_Code\'94 is the location where the item is stored. A bin can have multiple items in it, that is why we require a composite key (to make it unique). Furthermore, entity \'93INVENTORY\'94 shows the amount of a specific item in inventory, denoted by \'93Quantity.\'94 There is also a special connection between both \'93PRODUCT\'94 and \'93INVENTORY\'94 wherein the product ID is not required to be stored as to allow for the denotation of which items are part of products and which items are not. This is key in figuring out when products leave inventory. Typically a final item will always hold a product ID and a raw item will not. But there will be cases where final items are to be used in further production orders. They then will leave inventory as raw items. Despite being the most complex part of this system, inventory will provide an ease of access for employees to fulfill production orders and sales orders.
+\f3\fs24 \
+
+\f0\fs29\fsmilli14667 On another note, we include information regarding each employee and the department they are assigned to. Each department deals with a specific order type. For example, the sales department deals with sales orders, the manufacturing department deals with production orders, and the purchasing department deals with purchase orders. Therefore, depending on the \'93Item_Number,\'94 employee(s) are tied to that specific item number. The sales department sells the products to the customer while the manufacturing department creates the finished goods. On the other hand, child parts are associated with the manufacturing department and/or the purchasing department. For example, a child part can be manufactured in-house by utilizing a production order or by outsourcing it from another company by utilizing a purchasing order (or both).
+\f3\fs24 \
+
+\f0\fs29\fsmilli14667 \'a0
+\f3\fs24 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\
+\
+\
+\
+}
